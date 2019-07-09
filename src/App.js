@@ -1,11 +1,13 @@
 import React from 'react';
 import BeerList from './components/BeerList'
+import { BrowserRouter as Router, Link, Route } from 'react-router-dom'
 
 function App() {
   return (
-    <div>
-      <BeerList/>
-    </div>
+    <Router>
+      <Route exact path='/' component={BeerList}/>
+      
+    </Router>
   );
 }
 

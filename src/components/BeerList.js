@@ -1,5 +1,6 @@
 import React from 'react'
 import BeerThumb from './BeerThumb'
+import BeerFull from './BeerFull'
 
 export default class BeerList extends React.Component{
     constructor(){
@@ -10,21 +11,12 @@ export default class BeerList extends React.Component{
             page: 1,
             perPage: 10
         }
-        this.incrementBeersPerPage = this.incrementBeersPerPage.bind(this)
         this.fetchBeers = this.fetchBeers.bind(this)
     }
 
     componentDidMount(){
         this.fetchBeers(this.state.page, this.state.perPage)
     }
-
-    async incrementBeersPerPage(){
-        if (this.state.perPage <= 40){
-            this.setState({perPage: this.state.perPage + 10})
-            this.fetchBeers(this.state.page, this.state.perPage + 10)
-        }
-    }
-
 
     async fetchBeers(page, perPage){
         const data = await fetch(`https://api.openbrewerydb.org/breweries?page=${page}&per_page=${perPage}`)
@@ -39,7 +31,7 @@ export default class BeerList extends React.Component{
         <div>
             {this.state.beers.map(beer => {
                 return (
-                    <BeerThumb beer={beer} />
+                    <BeerThumb beer={beer} key={beer.id}/>
                 )
                 })}
 
@@ -50,7 +42,10 @@ export default class BeerList extends React.Component{
 
             {this.state.perPage < 50 && 
             <button 
-            onClick={this.incrementBeersPerPage}
+            onClick={() => {
+                this.setState({perPage: this.state.perPage + 10})
+                this.fetchBeers(this.state.page, this.state.perPage + 10)
+            }}
             >See 10 more breweries on the page!
             </button>}
 

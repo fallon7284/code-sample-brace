@@ -1,5 +1,6 @@
 import React from 'react'
 
+
 export default (props) => {
     const { id, name, brewery_type, city, state, phone } = props.beer
     let type
@@ -23,6 +24,7 @@ export default (props) => {
                 {name}
             </h1>
             <p>{`${name} is ${type} located in ${city}, ${state}.${phoneNumber}`}</p>
+            <button >See more!</button>
         </div>
     )   
 }
