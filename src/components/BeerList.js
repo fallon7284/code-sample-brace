@@ -1,4 +1,5 @@
 import React from 'react'
+import BeerThumb from './BeerThumb'
 
 export default class BeerList extends React.Component{
     constructor(){
@@ -10,32 +11,22 @@ export default class BeerList extends React.Component{
             perPage: 10
         }
         this.incrementBeersPerPage = this.incrementBeersPerPage.bind(this)
-        this.nextPage = this.nextPage.bind(this)
-        this.setBeers = this.setBeers.bind(this)
+        this.fetchBeers = this.fetchBeers.bind(this)
     }
 
     componentDidMount(){
-        this.setBeers(this.state.page, this.state.perPage)
+        this.fetchBeers(this.state.page, this.state.perPage)
     }
 
     async incrementBeersPerPage(){
         if (this.state.perPage <= 40){
             this.setState({perPage: this.state.perPage + 10})
-            this.setBeers(this.state.page, this.state.perPage + 10)
+            this.fetchBeers(this.state.page, this.state.perPage + 10)
         }
-
     }
 
-    async nextPage(){
-        this.setState({page: this.state.page + 1})
-        this.setBeers()
-        //this may cause a problem if I am on the last page and try to increment.  
-        //I won't rerender the page but I will increment the page value on state. 
-        //In this case a previous page button will no longer work correctly.
-    }
 
-    async setBeers(page, perPage){
-        console.log(`now we should fetch ${perPage} beers`)
+    async fetchBeers(page, perPage){
         const data = await fetch(`https://api.openbrewerydb.org/breweries?page=${page}&per_page=${perPage}`)
         const beers = await data.json()
         this.setState({beers})
@@ -47,21 +38,34 @@ export default class BeerList extends React.Component{
         const beers = 
         <div>
             {this.state.beers.map(beer => {
-                const { id, name, brewery_type, city, state, phone, website_url } = beer
-
                 return (
-                    <div key={id}>
-                        <a href={website_url}>
-                            <h1>
-                                {name}
-                            </h1>
-                        </a>
-                        <p>{`${name} is a ${brewery_type} brewery located in ${city}, ${state}. They can be reached at ${phone}.`}</p>
-                    </div>
+                    <BeerThumb beer={beer} />
                 )
-            })}
-            {this.state.perPage < 50 && <button onClick={this.incrementBeersPerPage}
-            >See 10 more breweries on the page!</button>}
+                })}
+
+            {this.state.page > 1 && <button onClick={() => {
+                this.setState({page: this.state.page - 1})
+                this.fetchBeers(this.state.page - 1, this.state.perPage)
+            }}>Previous Page</button>}
+
+            {this.state.perPage < 50 && 
+            <button 
+            onClick={this.incrementBeersPerPage}
+            >See 10 more breweries on the page!
+            </button>}
+
+            {this.state.perPage > 10 && 
+            <button onClick={() => {
+                this.setState({perPage: 10})
+                this.fetchBeers(this.state.page, 10)
+            }}>
+            See fewer brewers!
+            </button>}
+
+            <button onClick={() => {
+                this.setState({page: this.state.page + 1})
+                this.fetchBeers(this.state.page + 1, this.state.perPage)
+                }}>Next page!</button>
         </div>
 
         return (
