@@ -1,5 +1,4 @@
 import React from 'react'
-// import fetchBeers from '../functions/fetchBeers'
 
 export default class BeerList extends React.Component{
     constructor(){
