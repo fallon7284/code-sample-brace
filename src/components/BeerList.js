@@ -9,17 +9,21 @@ export default class BeerList extends React.Component{
             page: 1,
             perPage: 10
         }
+        this.incrementBeersPerPage = this.incrementBeersPerPage.bind(this)
+        this.nextPage = this.nextPage.bind(this)
+        this.setBeers = this.setBeers.bind(this)
     }
 
     componentDidMount(){
-        this.setBeers()
+        this.setBeers(this.state.page, this.state.perPage)
     }
 
     async incrementBeersPerPage(){
         if (this.state.perPage <= 40){
             this.setState({perPage: this.state.perPage + 10})
+            this.setBeers(this.state.page, this.state.perPage + 10)
         }
-        this.setBeers()
+
     }
 
     async nextPage(){
@@ -30,22 +34,21 @@ export default class BeerList extends React.Component{
         //In this case a previous page button will no longer work correctly.
     }
 
-    async setBeers(){
-        const data = await fetch(`https://api.openbrewerydb.org/breweries?page=${this.state.page}&per_page=${this.state.perPage}`)
+    async setBeers(page, perPage){
+        console.log(`now we should fetch ${perPage} beers`)
+        const data = await fetch(`https://api.openbrewerydb.org/breweries?page=${page}&per_page=${perPage}`)
         const beers = await data.json()
-        if (beers.length){
-            this.setState({beers})
-        }
+        this.setState({beers})
     }
 
     render(){
-        console.log(this.state.beers)
+        console.log(this.state.beers.length, "<--- length of data", this.state.beers, this.state.perPage, "<------ beers per page")
         const loading = <div>FETCHING BEERS...</div>
         const beers = 
         <div>
             {this.state.beers.map(beer => {
                 const { id, name, brewery_type, city, state, phone, website_url } = beer
-                // const link = <a href={website_url}>{website_url}</a>
+
                 return (
                     <div key={id}>
                         <a href={website_url}>
@@ -53,10 +56,12 @@ export default class BeerList extends React.Component{
                                 {name}
                             </h1>
                         </a>
-                        <p>{`${name} is a ${brewery_type} brewery located in ${city}, ${state}. \n They can be reached at ${phone}.`}</p>
+                        <p>{`${name} is a ${brewery_type} brewery located in ${city}, ${state}. They can be reached at ${phone}.`}</p>
                     </div>
                 )
             })}
+            {this.state.perPage < 50 && <button onClick={this.incrementBeersPerPage}
+            >See 10 more breweries on the page!</button>}
         </div>
 
         return (
