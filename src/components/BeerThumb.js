@@ -3,31 +3,31 @@ import { Link } from 'react-router-dom'
 
 
 export default (props) => {
-    const { id, name, brewery_type, city, state, phone } = props.beer
+    const { id, name, brewery_type, city, state } = props.beer
     let type
     if (brewery_type !== undefined){
         if (brewery_type === 'brewpub'){
-            type = `a ${brewery_type}`
+            type = `${brewery_type[0].toUpperCase()}${brewery_type.slice(1)}`
         }
         else {
-            type =`a ${brewery_type} brewery`
+            type =`${brewery_type[0].toUpperCase()}${brewery_type.slice(1)} Brewery`
         }
     }
     else {
         type = ''
     }
-    const phoneNumber = phone && ` They can be reached at ${phone}.`
 
     return (
         <div className="thumb">
             <h1>
                 {name}
             </h1>
-            <p>{`${name} is ${type} located in ${city}, ${state}.${phoneNumber}`}</p>
+
+            <div>{`${type} \n ${city}, ${state}.`}</div>
             <Link to={`beers/${id}`}>
             <button className="button" onClick={() => {
                 props.selectBeer(id)
-                }}>{`More info about ${name}`}</button>
+                }}>More info</button>
             </Link>   
         </div>
     )   

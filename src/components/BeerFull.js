@@ -1,5 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import brewImageArray from '../images/brewImageArray'
+
 
 export default class BeerFull extends React.Component{
     constructor(props){
@@ -34,6 +36,7 @@ export default class BeerFull extends React.Component{
 
     render(){
         const { beer } = this.state
+        console.log(beer)
         const loadedBeer = <div>
             This is the full {beer.name} page!
             </div>
@@ -41,6 +44,7 @@ export default class BeerFull extends React.Component{
         return(
             <div>
                 {beer ? loadedBeer : <div></div>}
+                <img src={brewImageArray[beer.id % 7]} alt="a randomly generated brewery interior"></img>
                 <Link to={'/beers'}><button>Back to the beers!</button></Link>
             </div>
             

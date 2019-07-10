@@ -40,7 +40,6 @@ export default class BeerPage extends React.Component{
         try{
             const data = await fetch(`https://api.openbrewerydb.org/breweries?page=${page}&per_page=${perPage}`)
             const holder = await data.json()
-            console.log(holder)
             const beers = holder.map(beer => {
                 const vals = ['brewery_type', 'city', 'name', 'state']
                 let searchableString = ''
@@ -65,8 +64,7 @@ export default class BeerPage extends React.Component{
     render(){
         const beers = 
         <div className="beer-content">
-        <div>{this.state.currentFilter}</div>
-        <input name="beer" onChange={this.handleChange} placeholder="Filter by state"></input>
+        <input name="beer" onChange={this.handleChange} placeholder="Prefer your beers filtered?"></input>
             {this.state.beers.filter(beer => beer.searchableString.toLowerCase().includes(this.state.currentFilter)).map(beer => {
                 return (
                     <BeerThumb beer={beer} key={beer.id} selectBeer={this.selectBeer}/>
