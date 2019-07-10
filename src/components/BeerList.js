@@ -1,6 +1,5 @@
 import React from 'react'
 import BeerThumb from './BeerThumb'
-import BeerFull from './BeerFull'
 
 export default class BeerList extends React.Component{
     constructor(){
@@ -19,13 +18,16 @@ export default class BeerList extends React.Component{
     }
 
     async fetchBeers(page, perPage){
-        const data = await fetch(`https://api.openbrewerydb.org/breweries?page=${page}&per_page=${perPage}`)
-        const beers = await data.json()
-        this.setState({beers})
+        try{
+            const data = await fetch(`https://api.openbrewerydb.org/breweries?page=${page}&per_page=${perPage}`)
+            const beers = await data.json()
+            this.setState({beers})
+        } catch(error){
+            console.log(error)
+        }  
     }
 
     render(){
-        console.log(this.state.beers.length, "<--- length of data", this.state.beers, this.state.perPage, "<------ beers per page")
         const loading = <div>FETCHING BEERS...</div>
         const beers = 
         <div>
