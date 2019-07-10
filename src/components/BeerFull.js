@@ -74,7 +74,7 @@ export default class BeerFull extends React.Component{
                         paddingLeft: '150px', 
                         paddingRight: '150px'
                         }}>
-                    {`A ${location} based ${type} located at ${street}, ${name} can be reached by phone at ${phone} or online.`}
+                    {`${location} based ${type} located at ${street}, ${name} can be reached by phone at ${phone} or online.`}
                     </div>
                     <div 
                     style={{paddingLeft: '150px', 
