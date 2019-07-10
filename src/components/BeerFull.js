@@ -4,13 +4,19 @@ export default class BeerFull extends React.Component{
     constructor(props){
         super(props)
         this.state = {
-            beer: null
+            beer: []
         }
         this.fetchBeer = this.fetchBeer.bind(this)
     }
 
     componentDidMount(){
-        this.fetchBeer()
+        const beer = this.props.beer
+        if (beer){
+            this.setState({beer: beer[0]})
+        } 
+        else {
+            this.fetchBeer()
+        }
     }
 
     async fetchBeer(){
@@ -22,6 +28,8 @@ export default class BeerFull extends React.Component{
             console.log(error)
         }
     }
+
+
 
     render(){
         const { beer } = this.state

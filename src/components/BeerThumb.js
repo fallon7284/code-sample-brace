@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 
 export default (props) => {
@@ -17,14 +18,18 @@ export default (props) => {
     }
     const phoneNumber = phone && ` They can be reached at ${phone}.`
 
-
     return (
-        <div key={id}>
+        <div>
             <h1>
                 {name}
             </h1>
             <p>{`${name} is ${type} located in ${city}, ${state}.${phoneNumber}`}</p>
-            <button >See more!</button>
+            <Link to={`beers/${id}`}>
+            <button onClick={() => {
+                props.selectBeer(id)
+                }}>See more!</button>
+            </Link>
+            
         </div>
     )   
 }
