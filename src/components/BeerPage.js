@@ -18,7 +18,6 @@ export default class BeerPage extends React.Component{
         this.fetchBeers = this.fetchBeers.bind(this)
         this.selectBeer = this.selectBeer.bind(this)
         this.handleChange = this.handleChange.bind(this)
-        this.filterBeers = this.filterBeers.bind(this)
     }
 
     componentDidMount(){
@@ -40,7 +39,18 @@ export default class BeerPage extends React.Component{
     async fetchBeers(page, perPage){
         try{
             const data = await fetch(`https://api.openbrewerydb.org/breweries?page=${page}&per_page=${perPage}`)
-            const beers = await data.json()
+            const holder = await data.json()
+            console.log(holder)
+            const beers = holder.map(beer => {
+                const vals = ['brewery_type', 'city', 'name', 'state']
+                let searchableString = ''
+                for (let i = 0; i < vals.length; i++){
+                    searchableString += `${beer[vals[i]]} `
+                }
+                console.log(searchableString)
+                return {...beer, searchableString}
+            })
+
             this.setState({beers})
         } catch(error){
             console.log(error)
@@ -48,25 +58,16 @@ export default class BeerPage extends React.Component{
     }
 
     handleChange = (evt) => {
-        this.setState({currentFilter: evt.target.value})
-        // this.filterBeers(this.state.currentFilter)
+        this.setState({currentFilter: evt.target.value.toLowerCase()})
     }
 
-    filterBeers(beers){
-        if (this.state.currentFilter === ''){
-            return beers
-        }
-        return this.state.beers.filter(beer => {
-            return (beer.name.includes(this.state.currentFilter))
-        })
-    }
 
     render(){
         const beers = 
         <div className="beer-content">
         <div>{this.state.currentFilter}</div>
         <input name="beer" onChange={this.handleChange} placeholder="Filter by state"></input>
-            {this.state.beers.map(beer => {
+            {this.state.beers.filter(beer => beer.searchableString.toLowerCase().includes(this.state.currentFilter)).map(beer => {
                 return (
                     <BeerThumb beer={beer} key={beer.id} selectBeer={this.selectBeer}/>
                 )
