@@ -13,6 +13,8 @@ Enter text in the filter input to dynamically "filter your beer" by state, city,
 
 Click on the name of a brewery and you will be taken to a detailed view.
 
+Brewery detail views can also be reached at /beers/id
 
+There are over 8000 breweries in the database, so accessible ids run a bit beyond 8000.
 
 
