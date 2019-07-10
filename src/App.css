@@ -9,14 +9,20 @@
 
 .thumb {
   width: 70%;
-  background-color: rgb(84, 84, 84, .5);
-  border: 1px solid rgb(92, 92, 92);
+  background-color: rgb(84, 84, 84, .3);
+  border: 2px solid rgb(92, 92, 92, .3);
   color: #e3ded3;
-  border-radius: 10px
+  border-radius: 10px;
+  align-content: center;
+  margin-bottom: 20px;
+}
+
+.thumb-content{
+  text-align: center;
 }
 
 .button {
-  background-color: rgb(84, 84, 84, .5);
+  background-color: rgba(83, 83, 83, 0.5);
   border: none;
   color: #202020;
   padding: 15px 32px;
@@ -25,6 +31,25 @@
   display: inline-block;
   font-size: 16px;
   border-radius: 4px;
+}
+
+.title-button{
+  border: none;
+  color: #e3ded3;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  border-radius: 4px;
+}
+
+.title-button:hover{
+  background-color: rgba(201, 201, 201, 0.2);
+  color: #e3ded3;
+}
+
+.button:hover{
+  background-color: rgba(65, 64, 64)
 }
 
 .home {
@@ -46,7 +71,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+  font-size: calc(10px + 1vmin);
   color: #e3ded3;
   opacity: .9;
   position: fixed;
@@ -59,8 +84,24 @@
   padding-top: 20vh;
   background-color: #282c34;
   color: white;
-  font-size: calc(10px + 2vmin);
+  font-size: 1.2em;
   background: url('../src/images/brewery-background.jpg') no-repeat center center fixed;
+  background-size: cover;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+
+/* .beer-full img{
+  align-self: center
+} */
+
+.beer-full {
+  background: url('../src/images/brewery-background.jpg');
+  height: '100%';
+  background-position: center;
+  background-repeat: no-repeat;
   background-size: cover;
 }
 

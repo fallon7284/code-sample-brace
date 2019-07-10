@@ -19,16 +19,15 @@ export default (props) => {
 
     return (
         <div className="thumb">
-            <h1>
-                {name}
-            </h1>
-
-            <div>{`${type} \n ${city}, ${state}.`}</div>
-            <Link to={`beers/${id}`}>
-            <button className="button" onClick={() => {
-                props.selectBeer(id)
-                }}>More info</button>
-            </Link>   
+            <Link to={`beers/${id}`} className="title-button">
+                <h1 className="thumb-title">
+                    {name}
+                </h1>
+            </Link> 
+            
+            <div className="thumb-sub">{type}</div>
+            <div className="thumb-sub">{`${city}, ${state}.`}</div>
+              
         </div>
     )   
 }

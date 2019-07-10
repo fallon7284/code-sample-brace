@@ -37,15 +37,18 @@ export default class BeerFull extends React.Component{
     render(){
         const { beer } = this.state
         console.log(beer)
-        const loadedBeer = <div>
+        const loadedBeer = <div >
             This is the full {beer.name} page!
             </div>
         
         return(
-            <div>
+            <div className="beer-full">
                 {beer ? loadedBeer : <div></div>}
-                <img src={brewImageArray[beer.id % 7]} alt="a randomly generated brewery interior"></img>
-                <Link to={'/beers'}><button>Back to the beers!</button></Link>
+                <img 
+                src={brewImageArray[beer.id % 7]} 
+                alt="a randomly generated brewery interior">
+                </img>
+                <Link to={'/beers'} className="button">Back to the beers!</Link>
             </div>
             
         )
