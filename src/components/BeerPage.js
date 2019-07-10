@@ -90,7 +90,7 @@ export default class BeerPage extends React.Component{
             MORE BREWERS
             </button>}
 
-            <input className="input" onChange={this.handleChange} placeholder="Prefer your beers filtered?"></input>
+            <input className="input" onChange={this.handleChange} placeholder="Prefer your beer filtered?"></input>
 
             {this.state.perPage > 10 && 
             <button className="button" onClick={() => {
@@ -107,7 +107,7 @@ export default class BeerPage extends React.Component{
 
 
         return (
-            <div>
+            <div className="background">
                 <div className="header">
                     <h1>BREWERY FINDER</h1>
                     <div className="header-buttons">

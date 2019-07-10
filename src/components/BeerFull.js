@@ -36,21 +36,64 @@ export default class BeerFull extends React.Component{
 
     render(){
         const { beer } = this.state
-        console.log(beer)
-        const loadedBeer = <div >
-            This is the full {beer.name} page!
-            </div>
+        const {brewery_type, name, city, state, street, phone, website_url } = beer
+
+        let type
+        if (brewery_type !== undefined){
+            if (brewery_type === 'brewpub'){
+                type = `${brewery_type[0].toUpperCase()}${brewery_type.slice(1)}`
+            }
+            else {
+                type =`${brewery_type[0].toUpperCase()}${brewery_type.slice(1)} Brewery`
+            }
+        }
+        else {
+            type = ''
+        }
+
+        const location = city && state && `${city}, ${state}`
         
         return(
-            <div className="beer-full">
-                {beer ? loadedBeer : <div></div>}
-                <img 
-                src={brewImageArray[beer.id % 7]} 
-                alt="a randomly generated brewery interior">
-                </img>
-                <Link to={'/beers'} className="button">Back to the beers!</Link>
+            <div className="full-back">
+                <div className="beer-full">
+                    {name ? 
+                    <div 
+                        className="title" 
+                        style={{textAlign: 'center'}}>
+                        {beer.name.toUpperCase()}
+                    </div> : <div></div>}
+                    <div style={{display: 'flex', justifyContent: 'center', alignContent: 'center'}}>
+                        <img 
+                        src={brewImageArray[beer.id % 7]} 
+                        alt="a randomly generated brewery interior">
+                        </img>
+                    </div>
+                    
+                    <div 
+                    style={{
+                        paddingLeft: '150px', 
+                        paddingRight: '150px'
+                        }}>
+                    {`A ${location} based ${type} located at ${street}, ${name} can be reached by phone at ${phone} or online.`}
+                    </div>
+                    <div 
+                    style={{paddingLeft: '150px', 
+                    paddingRight: '150px',
+                    display: 'flex',
+                    justifyContent: 'space-between'
+                    }}>
+                        <a 
+                        className="button" 
+                        rel="noopener noreferrer"
+                        target="_black" 
+                        href={website_url}>
+                        {`Visit ${name} online`}
+                        </a>
+                        <Link to={'/beers'} className="button">Find more breweries</Link>
+                    </div>
+                    
+                </div>
             </div>
-            
         )
     }
 }

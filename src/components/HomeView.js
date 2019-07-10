@@ -4,10 +4,10 @@ import { Link } from 'react-router-dom'
 export default (props) => {
     return (
         <div className="home">
-        <h1>Click on the button below to see some of the finest breweries in the United States</h1>
+        <h1 style={{width: '50%'}}>Welcome to Brewery Finder</h1>
             <Link to='/beers'>
-            <button className="button"><h1>Click Here To Find Beers</h1></button>
-            </Link> 
+            <button className="home-button"><h1>Click Here To Find The Best Brewers</h1></button>
+            </Link>
         </div>
     )
 }

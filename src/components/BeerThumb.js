@@ -26,8 +26,7 @@ export default (props) => {
             </Link> 
             
             <div className="thumb-sub">{type}</div>
-            <div className="thumb-sub">{`${city}, ${state}.`}</div>
-              
+            {city && state && <div className="thumb-sub">{`${city}, ${state}.`}</div>}
         </div>
     )   
 }
