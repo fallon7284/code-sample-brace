@@ -1,7 +1,6 @@
 import React from 'react'
 import BeerThumb from './BeerThumb'
 import BeerFull from './BeerFull'
-import Header from './Header'
 import '../App.css'
 
 export default class BeerPage extends React.Component{
@@ -9,7 +8,6 @@ export default class BeerPage extends React.Component{
         super(props)
         this.state = {
             beers: [],
-            viewingSingleBeer: false,
             selectedBeer: null,
             page: 1,
             perPage: 10,
@@ -44,7 +42,9 @@ export default class BeerPage extends React.Component{
                 const vals = ['brewery_type', 'city', 'name', 'state']
                 let searchableString = ''
                 for (let i = 0; i < vals.length; i++){
-                    searchableString += `${beer[vals[i]]} `
+                    if (beer[vals[i]]){
+                        searchableString += `${beer[vals[i]]} `
+                    }
                 }
                 console.log(searchableString)
                 return {...beer, searchableString}
@@ -64,46 +64,56 @@ export default class BeerPage extends React.Component{
     render(){
         const beers = 
         <div className="beer-content">
-        <input name="beer" onChange={this.handleChange} placeholder="Prefer your beers filtered?"></input>
             {this.state.beers.filter(beer => beer.searchableString.toLowerCase().includes(this.state.currentFilter)).map(beer => {
                 return (
                     <BeerThumb beer={beer} key={beer.id} selectBeer={this.selectBeer}/>
                 )
                 })}
 
+
+            
+        </div>
+
+        const buttons = <div>
             {this.state.page > 1 && 
             <button className="button" onClick={() => {
                 this.setState({page: this.state.page - 1})
                 this.fetchBeers(this.state.page - 1, this.state.perPage)
             }}>
-            Previous Page</button>}
+            PREVIOUS</button>}
 
             {this.state.perPage < 50 && 
             <button className="button" onClick={() => {
                 this.setState({perPage: this.state.perPage + 10})
                 this.fetchBeers(this.state.page, this.state.perPage + 10)
             }}>
-            See 10 more breweries on the page!
+            MORE BREWERS
             </button>}
+
+            <input className="input" onChange={this.handleChange} placeholder="Prefer your beers filtered?"></input>
 
             {this.state.perPage > 10 && 
             <button className="button" onClick={() => {
                 this.setState({perPage: 10})
                 this.fetchBeers(this.state.page, 10)
             }}>
-            See fewer brewers!
+            FEWER BREWERS
             </button>}
-
             <button className="button" onClick={() => {
                 this.setState({page: this.state.page + 1})
                 this.fetchBeers(this.state.page + 1, this.state.perPage)
-                }}>Next page!</button>
+                }}>NEXT</button>                                       
         </div>
 
 
         return (
             <div>
-                <Header/>
+                <div className="header">
+                    <h1>BREWERY FINDER</h1>
+                    <div className="header-buttons">
+                    {buttons}
+                    </div>
+                </div>
                 {this.state.selectedBeer === null ? beers : <BeerFull beer={this.state.selectedBeer}/>}
             </div>
             
