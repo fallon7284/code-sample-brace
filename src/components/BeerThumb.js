@@ -20,9 +20,9 @@ export default (props) => {
     return (
         <div className="thumb">
             <Link to={`beers/${id}`} className="title-button">
-                <h1 className="thumb-title">
-                    {name}
-                </h1>
+            <h1 className="thumb-title">
+                {name}
+            </h1>
             </Link> 
             
             <div className="thumb-sub">{type}</div>
