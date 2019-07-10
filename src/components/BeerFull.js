@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 export default class BeerFull extends React.Component{
     constructor(props){
@@ -33,8 +34,16 @@ export default class BeerFull extends React.Component{
 
     render(){
         const { beer } = this.state
+        const loadedBeer = <div>
+            This is the full {beer.name} page!
+            </div>
+        
         return(
-            beer ? <div>This is the full {beer.name} page!</div> : <div></div>
+            <div>
+                {beer ? loadedBeer : <div></div>}
+                <Link to={'/beers'}><button>Back to the beers!</button></Link>
+            </div>
+            
         )
     }
 }

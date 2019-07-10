@@ -19,17 +19,16 @@ export default (props) => {
     const phoneNumber = phone && ` They can be reached at ${phone}.`
 
     return (
-        <div>
+        <div className="thumb">
             <h1>
                 {name}
             </h1>
             <p>{`${name} is ${type} located in ${city}, ${state}.${phoneNumber}`}</p>
             <Link to={`beers/${id}`}>
-            <button onClick={() => {
+            <button className="button" onClick={() => {
                 props.selectBeer(id)
-                }}>See more!</button>
-            </Link>
-            
+                }}>{`More info about ${name}`}</button>
+            </Link>   
         </div>
     )   
 }
